@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Welcome to wali devops course</title>
+<title>Welcome to sangmesh devops course</title>
 </head>
 <body>
 	<h1>Please select the following topic!</h1>
