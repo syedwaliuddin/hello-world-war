@@ -1,14 +1,14 @@
 <html>
 <head>
-<title>Welcome to wali</title>
+<title>Welcome to wali devops course</title>
 </head>
 <body>
-	<h1>Please select the following categories!</h1>
-	<h2>1.D</h2>
-	<h2>2.Ven</h2>
-	<h2>3.Hor</h2>
-	<h2>4.Ani</h2>
-	<h2>5.Com</h2>
+	<h1>Please select the following topic!</h1>
+	<h2>1.Linux</h2>
+	<h2>2.Git</h2>
+	<h2>3.Tomcat</h2>
+	<h2>4.Maven</h2>
+	<h2>5.Jenkins</h2>
 	<p>
 		It is now
 		<%= new java.util.Date() %></p>
