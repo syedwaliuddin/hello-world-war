@@ -1,10 +1,10 @@
 pipeline {
- agent any
- stages {
-  stage ('my build') {
-   steps {
-      sh 'mvn package'
-      sh 'ls'
+ agent { node { label 'build' } }
+  stages {
+   stage ('my build') {
+    steps {
+     sh 'mvn package'
+     sh 'ls'
    }
   }
  }
