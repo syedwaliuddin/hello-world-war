@@ -9,3 +9,5 @@ pipeline {
   }
  } 
  stages {
+  agent { node { label 'deploy' } }
+    
