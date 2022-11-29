@@ -11,7 +11,7 @@ pipeline {
    stage ('my deploy') {
      agent { label 'deploydeploy' }
       steps {
-       sh 'sudo cp -R target/hello-world-war-1.0.0.war /opt/tomcat/webapps'
+       sh 'sudo scp -R target/hello-world-war-1.0.0.war root@172.31.12.223 /opt/tomcat/webapps'
        sh 'sudo sh /opt/tomcat/bin/startup.sh'
     }
    } 
