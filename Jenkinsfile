@@ -8,7 +8,6 @@ pipeline {
    }
   }
  } 
-}
 agent { node { label 'deploy' } }
   stage ('my deploy') {
    step {
