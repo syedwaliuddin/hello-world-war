@@ -1,19 +1,18 @@
 pipeline {
-  agent none
-  stages {
-   stage ('my build') {
-     agent { label 'buildbuild' }
-     steps {
-     sh 'mvn package'
-     sh 'ls'
-    }
-   }
-   stage ('my deploy') {
-     agent { label 'deploydeploy' }
+  agent { node { label 'build' } }
+    stages {
+     stage ('my build') {
       steps {
-       sh 'sudo scp -r /root/hello-world-war/target/hello-world-war-1.0.0.war root@172.31.12.223:/opt/tomcat/webapps'
-       sh 'sudo sh /opt/tomcat/bin/startup.sh'
+       sh 'mvn package'
+       sh 'ls'
+      }
+     }
+     agent { node { label 'deploy' }
+      stage ('my deploy') {
+       steps {
+        sh 'sudo scp -r /home/syed/hello-world-war/target/hello-world-war-1.0.0.war wali@172.31.35.211:/root/opt/tomcat/webapps'
+        sh 'sudo sh /root/opt/tomcat/bin/startup.sh'
+       }
+      } 
     }
-   } 
-  }
 }
