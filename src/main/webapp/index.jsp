@@ -1,14 +1,14 @@
 <html>
 <head>
-<title>Welcome to Netflix!</title>
+<title>Welcome to jenkins!</title>
 </head>
 <body>
-	<h1>Please select the following categories!</h1>
-	<h2>1.Drama</h2>
-	<h2>2.Vengful</h2>
-	<h2>3.Horror</h2>
-	<h2>4.Anime</h2>
-	<h2>5.Comedy</h2>
+	<h1>Please select the following jenkins topics!</h1>
+	<h2>1.Freestyle job</h2>
+	<h2>2.Pipeline job</h2>
+	<h2>3.Maven job</h2>
+	<h2>4.Declarative scripts</h2>
+	<h2>5.Congigure global security</h2>
 	<p>
 		It is now
 		<%= new java.util.Date() %></p>
