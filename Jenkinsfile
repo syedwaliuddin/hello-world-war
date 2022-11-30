@@ -4,7 +4,7 @@ pipeline {
    stage ('my build') {
     steps {
      sh 'mvn package'
-      sh 'scp -r target/hello-world-war-1.0.0.war deploy@172.31.33.31:/opt/tomct/webapps'
+      sh 'sudo scp -r target/hello-world-war-1.0.0.war deploy@172.31.33.31:/opt/tomct/webapps'
     }
    }
     
