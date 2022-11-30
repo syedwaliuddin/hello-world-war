@@ -1,8 +1,7 @@
 pipeline {
-  agent none
+  agent { node { label 'build' } }
     stages {
       stage ('my build') {
-       agent { node { label 'build' } }
         steps {
          sh 'mvn package'
          sh 'sudo scp -r target/hello-world-war-1.0.0.war deploy@172.31.33.31:/opt/tomct/webapps'
