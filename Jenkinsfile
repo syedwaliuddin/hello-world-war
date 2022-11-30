@@ -1,6 +1,6 @@
 pipeline {
-  stages {
-    agent {label 'build'}
+  agent {label 'build'}
+    stages {
       stage ('my build') { 
         steps {
           sh 'mvn package'
@@ -13,6 +13,6 @@ pipeline {
          sh 'sh /opt/tomcat/bin/shutdown.sh'
          sh 'sh /opt/tomcat/bin/startup.sh'
          }
-       } 
+    } 
   }
 }
