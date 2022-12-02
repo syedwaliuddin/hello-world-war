@@ -3,8 +3,8 @@ pipeline {
    stages {
     stage ('my build') {
      steps {
-      sh 'echo ${BUILD_VERSION}'
-      sh 'mvn deploy'
+      sh 'echo ${BUILD_VERSION}"
+      sh 'sudo mvn deploy'
       sh 'pwd'  
      }
     } 
