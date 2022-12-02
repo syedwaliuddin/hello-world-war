@@ -3,7 +3,7 @@ pipeline {
    stages {
     stage ('my build') {
      steps {
-      sh echo "${BUILD_VERSION}"
+      sh "echo ${BUILD_VERSION}"
       sh 'mvn deploy'
       sh 'pwd'  
      }
