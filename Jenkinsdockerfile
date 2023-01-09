@@ -11,7 +11,7 @@ pipeline {
             agent {label 'docker1'}
             steps {
                 sh 'docker login -u sangmeshbhure -p aws@123bhure'
-                sh 'docker tag mytomimage sangmeshbhure/tomproject'
+                sh 'docker tag mytomimage sangmeshbhure/tomproject:myimage'
                 sh 'docker push sangmeshbhure/tomproject'
             }
         }
@@ -19,8 +19,8 @@ pipeline {
             agent { label 'docker2' }
             steps {
                 sh 'docker push sangmeshbhure/tomproject'
-                sh 'docker rmi -f mytomimage'
-                sh 'docker run -d -p 8080:8080 mytomimage'
+                sh 'docker rmi -f myimage'
+                sh 'docker run -d -p 8080:8080 myimage'
             }
         }
     }
