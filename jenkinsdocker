@@ -1,0 +1,25 @@
+pipeline {
+  agent { label 'build'}
+   stages {
+      stage ('build stage') {
+        steps {
+          sh 'docker build -t tomcatimage -f hello-world-war/Dockerfile .'
+        }
+    }
+    stage ('publish stage') {
+      steps {
+        sh 'docker login -u waliuddin -p wali@1234'
+        sh 'docker tag tomcatimage waliuddin/mytomcat'
+        sh 'docker push waliuddin/mytomcat'
+     }
+     stage ('deploy stage') {
+       agent {lable 'deploy'}
+        steps {
+          sh 'docker pull waliuddin/mytomcat'
+          sh 'docker rmi -f tomcatimage'
+          sh 'docker run -d -p 8080:8080 tomcatimage'
+        } 
+     }
+   }
+}    
+    
