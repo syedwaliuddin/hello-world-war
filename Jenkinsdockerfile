@@ -8,7 +8,7 @@ pipeline {
             }
         }
         stage ('publish stage') {
-            agent {label 'docker'}
+            agent {label 'docker1'}
             steps {
                 sh 'docker login -u sangmeshbhure -p aws@123bhure'
                 sh 'docker tag mytomimage sangmeshbhure/tomproject'
