@@ -1,24 +1,27 @@
 pipeline {
-  agent { label 'build'}
-   stages {
-      stage ('build stage') {
-        steps {
-          sh 'docker build -t tomcatimage .'
+    agent none
+    stages {
+        stage ('build stage') {
+            agent { label 'docker' }
+            steps {
+                sh 'docker build -t mytomimage .'
+            }
+        }
+        stage ('publish stage') {
+            agent {label 'docker'}
+            steps {
+                sh 'docker login -u sangmeshbhure -p aws@123bhure'
+                sh 'docker tag mytomimage sangmeshbhure/tomproject'
+                sh 'docker push sangmeshbhure/tomproject'
+            }
+        }
+        stage ('deploy stage') {
+            agent { label 'deploy2' }
+            steps {
+                sh 'docker push sangmeshbhure/tomproject'
+                sh 'docker rmi -f mytomimage'
+                sh 'docker run -d -p 8080:8080 mytomimage'
+            }
         }
     }
-    stage ('publish stage') {
-      steps {
-        sh 'docker login -u waliuddin -p wali@1234'
-        sh 'docker tag tomcatimage waliuddin/mytomcat'
-        sh 'docker push waliuddin/mytomcat'
-     }
-     stage ('deploy stage') {
-       agent {lable 'deploy'}
-        steps {
-          sh 'docker pull waliuddin/mytomcat'
-          sh 'docker rmi -f tomcatimage'
-          sh 'docker run -d -p 8080:8080 tomcatimage'
-        } 
-     }
-   }
 }    
