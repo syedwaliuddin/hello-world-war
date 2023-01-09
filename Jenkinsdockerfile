@@ -19,8 +19,8 @@ pipeline {
             agent { label 'docker2' }
             steps {
                 sh 'docker pull sangmeshbhure/tomimage:latest'
-                sh 'docker rmi -f sangmeshbhure/tomimage:latest'
-                sh 'docker run -d -p 8080:8080 sangmeshbhure/tomimage:latest'
+                sh 'docker rm -f container1'
+                sh 'docker run -d -p 8080:8080 --name container1 sangmeshbhure/tomimage:latest'
             }
         }
     }
