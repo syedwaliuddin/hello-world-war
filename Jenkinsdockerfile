@@ -3,7 +3,7 @@ pipeline {
    stages {
       stage ('build stage') {
         steps {
-          sh 'docker build -t tomcatimage -f hello-world-war/Dockerfile .'
+          sh 'docker build -t tomcatimage .'
         }
     }
     stage ('publish stage') {
