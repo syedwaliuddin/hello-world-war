@@ -4,23 +4,23 @@ pipeline {
         stage ('build stage') {
             agent { label 'docker1' }
             steps {
-                sh 'docker build -t mytomimage .'
+                sh 'docker build -t mytomimage:${build_version} .'
             }
         }
         stage ('publish stage') {
             agent {label 'docker1'}
             steps {
                 sh 'docker login -u sangmeshbhure -p aws@123bhure'
-                sh 'docker tag mytomimage sangmeshbhure/tomimage:latest'
-                sh 'docker push sangmeshbhure/tomimage:latest'
+                sh 'docker tag mytomimage:${build_version} sangmeshbhure/tomimage:${build_version}'
+                sh 'docker push sangmeshbhure/tomimage:${build_version}'
             }
         }
         stage ('deploy stage') {
             agent { label 'docker2' }
             steps {
-                sh 'docker pull sangmeshbhure/tomimage:latest'
+                sh 'docker pull sangmeshbhure/tomimage:${build_version}'
                 sh 'docker rm -f container1'
-                sh 'docker run -d -p 8080:8080 --name container1 sangmeshbhure/tomimage:latest'
+                sh 'docker run -d -p 8080:8080 --name container1 sangmeshbhure/tomimage:${build_version}'
             }
         }
     }
