@@ -18,9 +18,9 @@ pipeline {
         stage ('deploy stage') {
             agent { label 'docker2' }
             steps {
-                sh 'docker push sangmeshbhure/tomproject'
-                sh 'docker rmi -f myimage'
-                sh 'docker run -d -p 8080:8080 sangmeshbhure/tomproject:latest'
+                sh 'docker pull sangmeshbhure/tomproject'
+                sh 'docker rmi -f tomproject:latest'
+                sh 'docker run -d -p 8080:8080 tomproject:latest'
             }
         }
     }
