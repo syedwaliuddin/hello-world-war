@@ -2,7 +2,7 @@ pipeline {
     agent none
     stages {
         stage ('build stage') {
-            agent { label 'docker' }
+            agent { label 'docker1' }
             steps {
                 sh 'docker build -t mytomimage .'
             }
@@ -16,7 +16,7 @@ pipeline {
             }
         }
         stage ('deploy stage') {
-            agent { label 'deploy2' }
+            agent { label 'docker2' }
             steps {
                 sh 'docker push sangmeshbhure/tomproject'
                 sh 'docker rmi -f mytomimage'
