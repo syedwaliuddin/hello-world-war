@@ -11,16 +11,16 @@ pipeline {
             agent {label 'docker1'}
             steps {
                 sh 'docker login -u sangmeshbhure -p aws@123bhure'
-                sh 'docker tag mytomimage sangmeshbhure/tomproject:latest'
-                sh 'docker push sangmeshbhure/tomproject'
+                sh 'docker tag mytomimage sangmeshbhure/tomimage:latest'
+                sh 'docker push sangmeshbhure/tomimage:latest'
             }
         }
         stage ('deploy stage') {
             agent { label 'docker2' }
             steps {
-                sh 'docker pull sangmeshbhure/tomproject'
-                sh 'docker rmi -f tomproject:latest'
-                sh 'docker run -d -p 8080:8080 tomproject:latest'
+                sh 'docker pull sangmeshbhure/tomimage:latest'
+                sh 'docker rmi -f sangmeshbhure/tomimage:latest'
+                sh 'docker run -d -p 8080:8080 sangmeshbhure/tomimage:latest'
             }
         }
     }
