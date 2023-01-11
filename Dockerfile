@@ -4,4 +4,5 @@ COPY . .
 RUN mvn clean package
 
 FROM tomcat
+ARG BUILD_NUMBER=1.0
 COPY --from=build_stage /target/hello-world-war-${BUILD_NUMBER}.war /usr/local/tomcat/webapps/
