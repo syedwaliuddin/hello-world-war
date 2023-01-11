@@ -4,7 +4,7 @@ pipeline {
         stage ('build stage') {
             agent {label 'docker1'}
             steps {
-                sh 'docker build -t mytomimage:${build_version} .'
+                sh 'docker build -t mytomimage:${BUILD_NUMBER} --build-arg BUILD_NUMBER=${BUILD_NUMBER} .'
             }
         }
         stage ('publish stage') {
@@ -12,8 +12,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
                 sh 'docker login -u ${dockerhubUser} -p ${dockerhubPassword}'
-                sh 'docker tag mytomimage:${build_version} sangmeshbhure/tomimage:${build_version}'
-                sh 'docker push sangmeshbhure/tomimage:${build_version}'
+                sh 'docker tag mytomimage:${BUILD_NUMBER} sangmeshbhure/tomimage:${BUILD_NUMBER}'
+                sh 'docker push sangmeshbhure/tomimage:${BUILD_NUMBER}'
                 }
             }
         }
@@ -21,7 +21,7 @@ pipeline {
             agent {label 'docker2'}
             steps {
                 sh 'docker rm -f container1'
-                sh 'docker run -d -p 8080:8080 --name container1 sangmeshbhure/tomimage:${build_version}'
+                sh 'docker run -d -p 8080:8080 --name container1 sangmeshbhure/tomimage:${BUILD_NUMBER}'
             }
         }
     }
