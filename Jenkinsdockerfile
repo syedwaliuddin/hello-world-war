@@ -10,9 +10,11 @@ pipeline {
         stage ('publish stage') {
             agent {label 'docker1'}
             steps {
-                sh 'docker login -u sangmeshbhure -p aws@123bhure'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
+                sh 'docker login -u ${env.dockerhubUser} -p ${env.dockerhubPassword}'
                 sh 'docker tag mytomimage:${build_version} sangmeshbhure/tomimage:${build_version}'
                 sh 'docker push sangmeshbhure/tomimage:${build_version}'
+                }
             }
         }
         stage ('deploy stage') {
