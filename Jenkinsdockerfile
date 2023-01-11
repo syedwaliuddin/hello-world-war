@@ -2,7 +2,7 @@ pipeline {
     agent none
     stages {
         stage ('build stage') {
-            agent { label 'docker1' }
+            agent {label 'docker1'}
             steps {
                 sh 'docker build -t mytomimage:${build_version} .'
             }
@@ -16,9 +16,8 @@ pipeline {
             }
         }
         stage ('deploy stage') {
-            agent { label 'docker2' }
+            agent {label 'docker2'}
             steps {
-                sh 'docker pull sangmeshbhure/tomimage:${build_version}'
                 sh 'docker rm -f container1'
                 sh 'docker run -d -p 8080:8080 --name container1 sangmeshbhure/tomimage:${build_version}'
             }
