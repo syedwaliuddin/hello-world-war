@@ -12,8 +12,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
                 sh 'docker login -u ${dockerhubUser} -p ${dockerhubPassword}'
-                sh 'docker tag mytomimage:${BUILD_NUMBER} waliuddin/tomimage:${BUILD_NUMBER}'
-                sh 'docker push waliuddin/tomimage:${BUILD_NUMBER}'
+                sh 'docker tag mytomimage:${BUILD_NUMBER} waliuddin/mytom:${BUILD_NUMBER}'
+                sh 'docker push waliuddin/mytom:${BUILD_NUMBER}'
                 }
             }
         }
@@ -21,7 +21,7 @@ pipeline {
             agent {label 'docker2'}
             steps {
                 sh 'docker rm -f container1'
-                sh 'docker run -d -p 8080:8080 --name container1 waliuddin/tomimage:${BUILD_NUMBER}'
+                sh 'docker run -d -p 8080:8080 --name container1 waliuddin/mytom:${BUILD_NUMBER}'
             }
         }
     }
