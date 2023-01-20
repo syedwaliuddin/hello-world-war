@@ -1,0 +1,11 @@
+pipeline {
+    agent none
+    stages {
+        stage ('my build') {
+            steps {
+                sh 'sudo mvn package'
+                sh 'scp -r target/hello-world-war-1.0.0.war deploy@172.31.46.138:/opt/tomcat/webapps'
+            }
+        }
+    }
+}    
