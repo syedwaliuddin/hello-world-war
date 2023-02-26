@@ -1,0 +1,22 @@
+pipeline {
+    agent none
+    stages {
+        stage ('build stage') {
+            agent {label 'docker'}
+            steps {
+                sh 'docker build -t mytomimage:${BUILD_NUMBER} --build-arg BUILD_NUMBER=${BUILD_NUMBER} .'
+            }
+        }
+        stage ('publish stage') {
+            agent {label 'docker'}
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
+                sh 'docker login -u ${dockerhubUser} -p ${dockerhubPassword}'
+                sh 'docker tag mytomimage:${BUILD_NUMBER} waliuddin/mytom:${BUILD_NUMBER}'
+                sh 'docker push waliuddin/mytom:${BUILD_NUMBER}'
+                }
+            }
+        }
+    }
+}     
+        
