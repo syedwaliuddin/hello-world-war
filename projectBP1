@@ -17,6 +17,15 @@ pipeline {
                 }
             }
         }
+        stage( 'my deploy' ) {
+            agent {label 'k8smaster'} 
+            steps {
+               sh 'helm repo add helm https://waliuddin8792.jfrog.io/artifactory/api/helm/helm --username waliuddin8792@gmail.com --password Wali@8792'
+               sh 'helm repo update'
+               sh 'helm repo list'
+               sh 'helm upgrade --install mytomcat helm/tomcat --version=${BUILD_NUMBER} --set image=waliuddin/mytom1:${BUILD_NUMBER}'
+            }
+        }
     }
-}     
-        
+}
+       
