@@ -1,6 +1,29 @@
 pipeline {
-  agent none
-  stages {
-    stage ('deploy')
-    agent {label 'k8smaster'}
-      steps
+    agent none
+    stages {
+        stage ('build stage') {
+            agent {label 'docker'}
+            steps {
+                sh 'docker build -t mytomimage:${BUILD_NUMBER} --build-arg BUILD_NUMBER=${BUILD_NUMBER} .'
+            }
+        }
+        stage ('publish stage') {
+            agent {label 'docker'}
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
+                sh 'docker login -u ${dockerhubUser} -p ${dockerhubPassword}'
+                sh 'docker tag mytomimage:${BUILD_NUMBER} waliuddin/tomimage:${BUILD_NUMBER}'
+                sh 'docker push waliuddin/tomimage:${BUILD_NUMBER}'
+                }
+            }
+        }
+        stage( 'my deploy' ) {
+            agent {label 'k8smaster'} 
+            steps {
+               sh 'helm package ./helm/tomcat --version=${BUILD_NUMBER}'
+               sh 'tar -xvf tomcat-${BUILD_NUMBER}.tgz
+               sh 'helm upgrade --install tomcat helm/tomcat --set image=waliuddin/mytom1:${BUILD_NUMBER}'
+            }
+        }
+    }
+}
