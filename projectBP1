@@ -5,6 +5,7 @@ pipeline {
             agent {label 'docker'}
             steps {
                 sh 'docker build -t mytomimage:${BUILD_NUMBER} --build-arg BUILD_NUMBER=${BUILD_NUMBER} .'
+                sh 'helm package ./helm/tomcat --version=${BUILD_NUMBER}'
             }
         }
         stage ('publish stage') {
@@ -14,14 +15,13 @@ pipeline {
                 sh 'docker login -u ${dockerhubUser} -p ${dockerhubPassword}'
                 sh 'docker tag mytomimage:${BUILD_NUMBER} waliuddin/mytom1:${BUILD_NUMBER}'
                 sh 'docker push waliuddin/mytom1:${BUILD_NUMBER}'
+                sh 'curl -uwaliuddin8792@gmail.com:Wali@8792 -T tomcat-${BUILD_NUMBER}.tgz \"https://waliuddin8792.jfrog.io/artifactory/helm/tomcat-${BUILD_NUMBER}.tgz\"'
                 }
             }
         }
         stage( 'my deploy' ) {
             agent {label 'k8smaster'} 
             steps {
-               sh 'helm package ./helm/tomcat --version=${BUILD_NUMBER}'
-               sh 'curl -uwaliuddin8792@gmail.com:Wali@8792 -T tomcat-${BUILD_NUMBER}.tgz \"https://waliuddin8792.jfrog.io/artifactory/helm/tomcat-${BUILD_NUMBER}.tgz\"'
                sh 'helm repo add helm https://waliuddin8792.jfrog.io/artifactory/api/helm/helm --username waliuddin8792@gmail.com --password Wali@8792'
                sh 'helm repo update'
                sh 'helm repo list'
