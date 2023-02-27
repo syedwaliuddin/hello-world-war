@@ -21,7 +21,7 @@ pipeline {
             agent {label 'k8smaster'} 
             steps {
                sh 'helm package ./deployment --version=${BUILD_NUMBER}'
-               sh 'tar -xvf deployment-${BUILD_NUMBER}.tgz
+               sh 'tar -xvf deployment-${BUILD_NUMBER}.tgz'
                sh 'helm upgrade --install tomcat ./deployment --set image=waliuddin/mytom1:${BUILD_NUMBER}'
             }
         }
