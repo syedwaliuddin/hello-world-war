@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat
+spec:
+  replicas: 5
+  selector:
+   matchLabels:
+     app: tomcat
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 2
+  template:
+    metadata:
+      name: tomcat-nginx
+      labels:
+        app: tomcat
+    spec:
+      containers:
+        - name: tomcat
+          image: {{ .Values.image }}
+
