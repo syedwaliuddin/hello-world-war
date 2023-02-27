@@ -7,8 +7,8 @@ spec:
     app: tom
   type: NodePort
   ports: 
-    - name: tomcat
-      protocol: TCP
-      targetPort: 8080
-      port: 8080
-      nodePort: 30008
+  - name: tomcat
+    protocol: TCP
+    targetPort: 8080
+    port: 8080
+    nodePort: 30008
