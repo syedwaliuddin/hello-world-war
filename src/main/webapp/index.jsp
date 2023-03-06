@@ -48,7 +48,7 @@ h3 {
 <div class="bgimg-1">
   <div class="caption">
     <span class="border">HELLO</span><br>
-    <span class="border">SYED WALIUDDIN</span>
+    <span class="border">Dabang</span>
   </div>
 </div>
 
